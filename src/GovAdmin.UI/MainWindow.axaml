@@ -1,0 +1,11 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GovAdmin.UI.MainWindow"
+        Title="GovAdmin Simulator" Height="450" Width="800">
+    <StackPanel Margin="20">
+        <TextBlock Text="Enterprise Terminal v4.0" FontWeight="Bold" FontSize="18"/>
+        <TextBox Name="ScriptInput" Height="200" AcceptsReturn="True" FontFamily="Consolas" Margin="0,10"/>
+        <Button Content="Execute Script" Click="ExecuteButton_Click"/>
+        <TextBlock Name="OutputText" Margin="0,10"/>
+    </StackPanel>
+</Window>
