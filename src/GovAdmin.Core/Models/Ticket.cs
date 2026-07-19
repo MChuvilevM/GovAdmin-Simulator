@@ -1,3 +1,4 @@
+using System;
 namespace GovAdmin.Core.Models;
 
 public enum TicketPriority
