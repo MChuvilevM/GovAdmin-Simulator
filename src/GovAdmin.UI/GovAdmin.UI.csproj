@@ -3,15 +3,21 @@
     <TargetFramework>net9.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
+    <!-- Добавь эти параметры для правильной сборки -->
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.0" />
     <PackageReference Include="Avalonia.Desktop" Version="11.2.0" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.0" />
+    <!-- Обязательно добавь это для корректной работы SingleFile в Avalonia -->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GovAdmin.Engine\GovAdmin.Engine.csproj" />
+    <ProjectReference Include="..\GovAdmin.Core\GovAdmin.Core.csproj" />
   </ItemGroup>
 </Project>
