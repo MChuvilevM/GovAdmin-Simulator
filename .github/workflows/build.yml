@@ -27,8 +27,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal
           
       - name: Publish
-        # Указываем конкретный проект, чтобы избежать проблем с выводом при сборке решения
-        run: dotnet publish GovAdmin.UI/GovAdmin.UI.csproj -c Release -p:PublishSingleFile=false --self-contained true -r win-x64 --output "${{ github.workspace }}/publish"
+        run: dotnet publish src/GovAdmin.UI/GovAdmin.UI.csproj -c Release -p:PublishSingleFile=false --self-contained true -r win-x64 --output "${{ github.workspace }}/publish"
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
