@@ -23,6 +23,8 @@ public partial class MainWindow : Window
     private void ExecuteButton_Click(object sender, RoutedEventArgs e)
     {
         if (_currentTicket == null) return;
-        OutputText.Text = _executor.ExecuteTicketScript(ScriptInput.Text ?? "", _currentTicket);
+        
+        var result = _executor.ExecuteTicketScript(ScriptInput.Text ?? "", _currentTicket);
+        OutputText.Text = result.IsResolved ? $"SUCCESS: {result.Output}" : $"FAIL: {result.Output}";
     }
 }
