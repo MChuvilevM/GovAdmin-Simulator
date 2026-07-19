@@ -18,16 +18,17 @@ jobs:
           dotnet-version: 9.0.x
           
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore GovAdmin.sln
         
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build GovAdmin.sln --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish src/GovAdmin.UI/GovAdmin.UI.csproj -c Release -r win-x64 --self-contained true --output ./publish
+        # Собираем UI, он автоматически подтянет Core и Engine как зависимости
+        run: dotnet publish src/GovAdmin.UI/GovAdmin.UI.csproj -c Release -r win-x64 --self-contained true --output "${{ github.workspace }}/publish"
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: GovAdmin-App
-          path: ./publish/
+          path: publish/
