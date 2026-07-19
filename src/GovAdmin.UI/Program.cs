@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Fonts.Inter;
 using System;
 
 namespace GovAdmin.UI;
