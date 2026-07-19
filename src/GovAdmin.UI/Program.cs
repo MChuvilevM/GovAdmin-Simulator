@@ -1,5 +1,4 @@
 using Avalonia;
-using Avalonia.Fonts.Inter;
 using System;
 
 namespace GovAdmin.UI;
@@ -13,6 +12,5 @@ internal class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .WithInterFont()
             .LogToTrace();
 }
