@@ -16,8 +16,8 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore GovAdmin.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build GovAdmin.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test GovAdmin.sln --no-build --verbosity normal
