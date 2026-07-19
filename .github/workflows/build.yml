@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Build and Deploy
 
 on:
   push:
@@ -17,11 +17,14 @@ jobs:
         with:
           dotnet-version: 9.0.x
           
-      - name: Build and Test
-        run: |
-          dotnet restore
-          dotnet build --configuration Release --no-restore
-          dotnet test --no-build --verbosity normal
+      - name: Restore
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
           
       - name: Publish
         run: dotnet publish src/GovAdmin.UI/GovAdmin.UI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
