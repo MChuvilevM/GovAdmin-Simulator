@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading; // Добавь для безопасности потоков
 using GovAdmin.Engine;
 using GovAdmin.Core.Models;
 using GovAdmin.Core.Services;
@@ -22,31 +23,38 @@ public partial class MainWindow : Window
     {
         try {
             _currentTicket = _generator.Generate();
-            var titleBlock = this.FindControl<TextBlock>("TicketTitle");
+            // Явный поиск через NameScope
+            var titleBlock = this.FindNameScope()?.Find("TicketTitle") as TextBlock;
+            
             if (titleBlock != null) 
-                titleBlock.Text = $"[{_currentTicket.Priority}] {_currentTicket.Title}";
+                titleBlock.Text = $"[{_currentTicket?.Priority}] {_currentTicket?.Title ?? "None"}";
         } catch (Exception ex) {
-            var output = this.FindControl<TextBlock>("OutputText");
-            if (output != null) output.Text = "GEN_ERR: " + ex.Message;
+            UpdateOutput($"GEN_ERR: {ex.GetType().Name}");
         }
     }
 
     private void ExecuteButton_Click(object sender, RoutedEventArgs e)
     {
-        var input = this.FindControl<TextBox>("ScriptInput");
-        var output = this.FindControl<TextBlock>("OutputText");
+        var input = this.FindNameScope()?.Find("ScriptInput") as TextBox;
         
         if (_currentTicket == null) {
-            if (output != null) output.Text = "Error: Generate ticket first.";
+            UpdateOutput("Error: Generate ticket first.");
             return;
         }
 
         try {
             var result = _executor.ExecuteTicketScript(input?.Text ?? "", _currentTicket);
-            if (output != null) 
-                output.Text = result.IsResolved ? $"SUCCESS: {result.Output}" : $"FAIL: {result.Output}";
+            UpdateOutput(result.IsResolved ? $"SUCCESS: {result.Output}" : $"FAIL: {result.Output}");
         } catch (Exception ex) {
-            if (output != null) output.Text = "EXEC_ERR: " + ex.Message;
+            UpdateOutput($"EXEC_ERR: {ex.GetType().Name}");
         }
+    }
+
+    private void UpdateOutput(string text)
+    {
+        Dispatcher.UIThread.InvokeAsync(() => {
+            var output = this.FindNameScope()?.Find("OutputText") as TextBlock;
+            if (output != null) output.Text = text;
+        });
     }
 }
