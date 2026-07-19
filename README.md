@@ -1,5 +1,9 @@
 # GovAdmin-Simulator
 
+![.NET 9](https://img.shields.io/badge/.NET-9.0-blueviolet?style=flat&logo=.net)
+![Avalonia UI](https://img.shields.io/badge/Avalonia-11.2.0-blue?style=flat&logo=avalonia)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?style=flat&logo=windows)
+
 Desktop-симулятор управления IT-инфраструктурой, реализованный на .NET 9 и Avalonia UI.
 
 ## О проекте
