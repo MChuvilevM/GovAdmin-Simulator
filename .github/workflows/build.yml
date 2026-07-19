@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GovAdmin-App
-          path: ./publish/GovAdmin.UI.exe
+          path: ./publish/
