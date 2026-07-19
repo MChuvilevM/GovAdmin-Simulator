@@ -1,20 +1,27 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="GovAdmin.UI.MainWindow"
-        Title="GovAdmin Simulator" Height="450" Width="800">
-    <StackPanel Margin="20">
-        <TextBlock Text="Enterprise Terminal v4.0" FontWeight="Bold" FontSize="18"/>
-        
-        <!-- Блок тикета -->
-        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,10">
-            <StackPanel>
-                <TextBlock Name="TicketTitle" Text="Waiting for ticket..." FontWeight="SemiBold"/>
-                <Button Content="Generate New Ticket" Click="GenerateButton_Click" Margin="0,5,0,0"/>
-            </StackPanel>
-        </Border>
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 
-        <TextBox Name="ScriptInput" Height="150" AcceptsReturn="True" FontFamily="Consolas" Margin="0,10"/>
-        <Button Content="Execute Script" Click="ExecuteButton_Click"/>
-        <TextBlock Name="OutputText" Margin="0,10" Foreground="LightGreen"/>
-    </StackPanel>
-</Window>
+namespace GovAdmin.UI;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void GenerateButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var title = this.FindControl<TextBlock>("TicketTitle");
+        if (title != null) title.Text = "Ticket: GA-" + System.Guid.NewGuid().ToString().Substring(0, 8);
+    }
+
+    private void ExecuteButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var input = this.FindControl<TextBox>("ScriptInput");
+        var output = this.FindControl<TextBlock>("OutputText");
+        
+        if (output != null && input != null) 
+            output.Text = "> Executing: " + input.Text;
+    }
+}
