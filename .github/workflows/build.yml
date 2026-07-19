@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build and Publish
 
 on:
   push:
@@ -8,16 +8,26 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 9.0.x
-    - name: Restore dependencies
-      run: dotnet restore GovAdmin.sln
-    - name: Build
-      run: dotnet build GovAdmin.sln --configuration Release --no-restore
-    - name: Test
-      run: dotnet test GovAdmin.sln --no-build --verbosity normal
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+          
+      - name: Build and Test
+        run: |
+          dotnet restore
+          dotnet build --configuration Release --no-restore
+          dotnet test --no-build --verbosity normal
+          
+      - name: Publish
+        run: dotnet publish src/GovAdmin.UI/GovAdmin.UI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GovAdmin-App
+          path: ./publish/GovAdmin.UI.exe
